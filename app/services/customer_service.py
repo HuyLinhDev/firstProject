@@ -34,16 +34,23 @@ class CustomerService:
     def create_customer_and_upload_s3(self, customer: CustomerCreation) -> Optional[Customer]:
         try:
             db_customer = self.repository.create_customer(customer)
-            data = self.repository.get_all_customers()
-            csv = self.csv_service.convert_to_csv(data)
-            self.s3_service.upload_csv_to_s3_v2(csv)
-            return db_customer
 
+            if not db_customer:
+                print("Failed to create customer")
+                return None
+
+            data = self.repository.get_all_customers()
+            if not data:
+                print("Failed to retrieve customer data")
+                return db_customer
+
+            csv = self.csv_service.convert_to_csv(data)
+            if not csv:
+                print("Failed to convert customer data to CSV")
+                return db_customer
+
+            self.s3_service.upload_csv_to_s3(csv)
+            return db_customer
         except Exception as e:
             print(f"Error: {e}")
             return e
-
-    def export_customers_to_json(self, file_path: str) -> None:
-        customers = self.get_all_customers()
-        customers_data = [customer.__dict__ for customer in customers]
-        self.repository.convert_to_json_file(customers_data, file_path)
