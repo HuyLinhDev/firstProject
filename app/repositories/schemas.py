@@ -1,43 +1,49 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from typing import Optional
+from datetime import date
+from ..constants.customer import AccountType, CustomerStatus,  PreferredContactMethod
 class CustomerPayload(BaseModel):
     phonenumber: str
+
 
 class CustomerBase(BaseModel):
     customerid: int
     firstname: str
     lastname: str
+    name: str
     accounttype: str
     customerstatus: str
-    customersince: str
+    customersince: date  
     country: str
-    notes: str
-    preferredcontactmethod: str
-    email: str
-    state: str
-    streetaddress: str
-    postalcode: str
-    city: str
-    phonenumber: str
+    notes: Optional[str] = None  
+    preferredcontactmethod: Optional[str] = None  
+    email: Optional[str] = None  
+    state: Optional[str] = None  
+    streetaddress: Optional[str] = None  
+    postalcode: Optional[str] = None  
+    city: Optional[str] = None  
+    phonenumber: Optional[str] = None  
 
     class Config:
         orm_mode = True
+        
 
 class CustomerCreation(BaseModel):
     firstname: str
     lastname: str
-    accounttype: str
-    customerstatus: str
-    customersince: str
-    country: str
-    notes: str
-    preferredcontactmethod: str
-    email: str
-    state: str
-    streetaddress: str
-    postalcode: str
-    city: str
-    phonenumber: str
+    name: Optional[str] = None
+    accounttype: AccountType
+    customerstatus: CustomerStatus
+    customersince: Optional[date] = None
+    country: Optional[str] = None
+    notes: Optional[str] = None
+    preferredcontactmethod: PreferredContactMethod
+    email: Optional[EmailStr] = None
+    state: Optional[str] = None
+    streetaddress: Optional[str] = None
+    postalcode: Optional[str] = None
+    city: Optional[str] = None
+    phonenumber: Optional[str] = None
 
     class Config:
         orm_mode = True

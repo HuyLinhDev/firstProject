@@ -3,6 +3,8 @@ from typing import List, Optional
 from .models import Customer
 from .schemas import CustomerCreation
 import json
+from sqlalchemy.future import select
+from sqlalchemy import func
 
 class CustomerRepository:
     def __init__(self, db: Session):
@@ -22,11 +24,16 @@ class CustomerRepository:
         except (TypeError, IOError) as e:
             print(f"An error occurred: {e}")
 
+    async def get_max_id(self) -> int:
+        max_customer_id = self.db.query(Customer).order_by(Customer.customerid.desc()).first().customerid
+        return max_customer_id
+
     def create_customer(self, customer: CustomerCreation):
         try:
             db_customer = Customer(
                 firstname=customer.firstname,
                 lastname=customer.lastname,
+                name=customer.name,
                 accounttype=customer.accounttype,
                 customerstatus=customer.customerstatus,
                 customersince=customer.customersince,
@@ -38,7 +45,7 @@ class CustomerRepository:
                 streetaddress=customer.streetaddress,
                 postalcode=customer.postalcode,
                 city=customer.city,
-                phonenumber=customer.phonenumber
+                phonenumber=customer.phonenumber,
             )
             self.db.add(db_customer)
             self.db.commit()
@@ -47,4 +54,3 @@ class CustomerRepository:
         except Exception as e:
             self.db.rollback()
             print("e: ", e)
-            return None
