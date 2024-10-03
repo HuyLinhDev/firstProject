@@ -14,7 +14,7 @@ class CustomerRepository:
         return self.db.query(Customer).all()
 
     def get_customer_by_phonenumber(self, phonenumber: str) -> Optional[Customer]:
-        return self.db.query(Customer).filter_by(phonenumber=phonenumber).first()
+        return self.db.query(Customer).filter(Customer.phonenumber == phonenumber).first()
 
     def convert_to_json_file(obj, file_path):
         try:

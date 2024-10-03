@@ -31,7 +31,7 @@ def get_customer_by_phonenumber(request: CustomerPayload, db: Session = Depends(
         return customer
     raise HTTPException(status_code=404, detail="Customer not found")
 
-@app.post("/customers", response_model=CustomerResponse)
+@app.post("/customers/", response_model=CustomerResponse)
 def create_customer_and_upload_s3(customer: CustomerCreation, db: Session = Depends(get_db)):
     customer_service = CustomerService(db)
     db_customer = customer_service.create_customer_and_upload_s3(customer)
