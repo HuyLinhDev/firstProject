@@ -16,4 +16,4 @@ RUN chown -R app_user:app_group /app
 
 USER app_user
 
-CMD ["/bin/sh", "-c", "unvicorn app.main:app -h 0.0.0.0"]
+CMD ["/bin/sh", "-c", "uvicorn app.main:app -h 0.0.0.0"]
