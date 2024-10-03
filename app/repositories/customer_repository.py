@@ -24,7 +24,7 @@ class CustomerRepository:
         except (TypeError, IOError) as e:
             print(f"An error occurred: {e}")
 
-    async def get_max_id(self) -> int:
+    def get_max_id(self) -> int:
         max_customer_id = self.db.query(Customer).order_by(Customer.customerid.desc()).first().customerid
         return max_customer_id
 
@@ -45,7 +45,7 @@ class CustomerRepository:
                 streetaddress=customer.streetaddress,
                 postalcode=customer.postalcode,
                 city=customer.city,
-                phonenumber=customer.phonenumber,
+                phonenumber=customer.phonenumber
             )
             self.db.add(db_customer)
             self.db.commit()
