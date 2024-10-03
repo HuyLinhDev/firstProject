@@ -1,16 +1,14 @@
 from pydantic import BaseModel, EmailStr
 from typing import Optional
 from datetime import date
-from ..constants.customer import AccountType, CustomerStatus,  PreferredContactMethod
+from ..constants.customer import AccountType, CustomerStatus
 class CustomerPayload(BaseModel):
     phonenumber: str
-
 
 class CustomerBase(BaseModel):
     customerid: int
     firstname: str
     lastname: str
-    name: str
     accounttype: str
     customerstatus: str
     customersince: date  
@@ -31,13 +29,12 @@ class CustomerBase(BaseModel):
 class CustomerCreation(BaseModel):
     firstname: str
     lastname: str
-    name: Optional[str] = None
     accounttype: AccountType
     customerstatus: CustomerStatus
     customersince: Optional[date] = None
     country: Optional[str] = None
     notes: Optional[str] = None
-    preferredcontactmethod: PreferredContactMethod
+    preferredcontactmethod: Optional[str] = None
     email: Optional[EmailStr] = None
     state: Optional[str] = None
     streetaddress: Optional[str] = None

@@ -13,7 +13,6 @@ class Customer(Base):
     email = Column(String, nullable=True)
     state = Column(String, nullable=True)
     streetaddress = Column(String, nullable=True)
-    name = Column(String, nullable=True)
     phonenumber = Column(String, nullable=True)
     lastname = Column(String, nullable=False)
     customerstatus = Column(String, nullable=True)

@@ -30,10 +30,12 @@ class CustomerRepository:
 
     def create_customer(self, customer: CustomerCreation):
         try:
+            customerId = self.get_max_id() + 1
+
             db_customer = Customer(
+                customerid = customerId,
                 firstname=customer.firstname,
                 lastname=customer.lastname,
-                name=customer.name,
                 accounttype=customer.accounttype,
                 customerstatus=customer.customerstatus,
                 customersince=customer.customersince,

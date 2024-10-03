@@ -7,7 +7,3 @@ class AccountType(str, Enum):
 class CustomerStatus(str, Enum):
     ACTIVE = "Active"
     INACTIVE = "Inactive"
-
-class PreferredContactMethod(str, Enum):
-    EMAIL = "email"
-    PHONE = "phone"
